@@ -1,0 +1,10 @@
+#!/bin/sh
+
+ices -n Project_Rajio" -m "/ices" -F "/etc/ices/playlist.txt" -h "localhost" -P "4321"
+
+# ices  -n "your radio name"
+#		-m "mount point"
+#		-F "playlist absolute path"
+#		-h "server ip"
+#		-p "port"
+#		-P "password"

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+   	<meta name="viewport" content="width=device-width">
+	
+    <link rel="icon" type="image/vnd.microsoft.icon" href="Assets/favicon-20160613113903563.ico" />
+
+	<title>Project Rajio</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   	<script src="Assets/audioplayerengine/amazingaudioplayer.js"></script>
+	<script src="Assets/audioplayerengine/initaudioplayer-1.js"></script>
+	<link rel="stylesheet" type="text/css" href="Assets/audioplayerengine/initaudioplayer-1.css">
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+        
+	<style>
+		body{
+			background-image: url("Assets/bg.jpg");
+			background-size: cover;
+			overflow: hidden;
+		}
+        #title{
+            font-size: 1em;
+            /*font-family : "Source Sans Pro";*/
+            font-family: 'Raleway', sans-serif;
+        }
+		#nowplaying{
+			text-align: center;
+			position: relative;
+			font-family: "Roboto", sans serif;
+			font-weight: 100;
+			color: snow;
+			margin-bottom: 15px;
+		}
+        #divs{
+			font-size: 7em;
+			text-align: center;
+			position: relative;
+			margin-top: 20%;
+			margin-bottom: 20%;
+			font-family: "Roboto", sans serif;
+			font-weight: 100;
+		}
+		#titlebtn{
+			height: 150px;
+			padding-top: 60px;
+		}
+		#pop{
+			display: none;
+		}
+		.nonactive{
+			visibility: hidden;
+		}
+	</style>
+    
+</head>
+<body>
+	<div class="container">
+        
+		<div class="progress nonactive">	
+			<div class="indeterminate"></div>
+		</div>
+		<div class="col s4" id="divs">
+			<a id="titlebtn" class="waves-effect waves-light btn modal-trigger indigo lighten-3" href="#modal1">Project Rajio</a>
+		</div>
+		<div class="col s4" id="nowplaying">
+			Now Playing: <span id='son'></span>
+		</div>
+		
+		<div id="player">
+			<!-- Insert to your webpage where you want to display the audio player -->
+			<div id="amazingaudioplayer-1" style="display:block;position:relative;width:300px;height:auto;margin:0px auto 0px;">
+				<ul class="amazingaudioplayer-audios" style="display:none;">
+					<li data-artist="" data-title="" data-album="" data-info="" data-image="" data-duration="0">
+						<div class="amazingaudioplayer-source" data-src="http://192.168.1.131:8000/ices" data-type="audio/mpeg" />
+					</li>
+				</ul>
+				<div class="amazingaudioplayer-engine"><a href="" title="html5 music player">html5 music player</a></div>
+			</div>
+			<!-- End of body section HTML codes -->
+		</div>
+	
+		  <!-- Modal Structure -->
+			<div id="modal1" class="modal modal-fixed-footer">
+				<div class="modal-content">
+				<p><h5>Search: </h5></p>
+				<p><input type="text" id="Rname" placeholder="Enter Here."></p>
+				<div id="middleEast">
+				  <table class="striped bordered">
+					<thead>
+					  <tr>
+						  <th data-field="req">&nbsp;&nbsp;Req&nbsp;&nbsp;&nbsp;</th>
+						  <th data-field="name">Name&nbsp;</th>
+						  <th data-field="title">Title&nbsp;</th>
+						  <th data-field="artist">Artist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						  <th data-field="album">Album&nbsp;</th>
+						  <th data-field="track">Track&nbsp;</th>
+					  </tr>
+					</thead>
+					<tbody id="keyentry">
+					</tbody>
+				  </table>            				
+				</div>
+			</div>
+			
+			<div class="modal-footer">
+			  <a href="#!" id="triggers" class="modal-action waves-effect waves-green btn-flat">Enter</a>
+			</div>
+		</div>
+	</div>
+	<script src="/Assets/index.js"></script>
+</body>
+</html>
