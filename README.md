@@ -16,7 +16,7 @@
 
 #Node.js Requirements:
 1. fs
-2. socket.io/ socket.io-client
+2. socket.io / socket.io-client
 3. express
 4. net
 5. string-similarity
