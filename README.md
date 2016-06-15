@@ -2,7 +2,7 @@
 #Project Rajio
 	 A web radio based on distributed media storage.
 
-#check more infos in Project.pdf
+######check more infos in Project.pdf
 
 #Python Requirements:
 	1. eyeD3
