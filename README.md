@@ -1,10 +1,10 @@
 
-Project Rajio
-	- A web radio based on distributed media storage.
+#Project Rajio
+	 A web radio based on distributed media storage.
 
-check more infos in Project.pdf
+#check more infos in Project.pdf
 
-Python Requirements:
+#Python Requirements:
 	1. eyeD3
 	2. gevent
 	try use "pip install <package>"
@@ -13,7 +13,7 @@ Python Requirements:
 	// client.py : change line 16 and error detect
 	// server.py : change line 46
 
-Node.js Requirements:
+#Node.js Requirements:
 	1. fs
 	2. socket.io/ socket.io-client
 	3. express
@@ -21,7 +21,7 @@ Node.js Requirements:
 	5. similarity
 	try use "npm install <package>"
 
-System Requirements:
+#System Requirements:
 	1. Ubuntu 14.04 LTS
 	2. icecast2
 	3. iceS // unable to apt-get, plz download source code and make.
