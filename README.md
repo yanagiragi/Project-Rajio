@@ -2,7 +2,7 @@
 #Project Rajio
 	 A web radio based on distributed media storage.
 
-######check more infos in Project.pdf
+######check more infos in <a href="https://github.com/T-R-I-P/Project-Rajio/blob/master/Project.pdf">Project.pdf</a>
 
 #Python Requirements:
 1. eyeD3
@@ -20,7 +20,6 @@
 3. express
 4. net
 5. string-similarity
-try use "npm install <package>"
 
 #System Requirements:
 1. Ubuntu 14.04 LTS
