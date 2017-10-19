@@ -1,6 +1,5 @@
 
-# Project Rajio
-	 A web radio based on distributed media storage.
+# Project Rajio: A web radio based on distributed media storage.
 
 ### check more infos in <a href="https://github.com/T-R-I-P/Project-Rajio/blob/master/Project.pdf">Project.pdf</a>
 
