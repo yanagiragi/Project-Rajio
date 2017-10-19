@@ -7,12 +7,6 @@
 ## Python Requirements:
 1. eyeD3
 2. gevent
-	
-	try use "pip install <package>" <br/>
-	// note : this version contains no password check<br/>
-	// you may need to change code by your own<br/>
-	// client.py : change line 16 and error detect<br/>
-	// server.py : change line 46<br/>
 
 ## Node.js Requirements:
 1. fs
@@ -25,3 +19,10 @@
 1. Ubuntu 14.04 LTS
 2. icecast2
 3. iceS // unable to apt-get, plz download source code and make.
+
+## Note: 
+
+This version contains no password check, you may need to change code by your own
+
+1. [client.py](https://github.com/yanagiragi/Project-Rajio/blob/master/master/client.py#L16) 
+2. [server.py](https://github.com/yanagiragi/Project-Rajio/blob/master/slave/server.py#L46)
