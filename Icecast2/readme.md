@@ -6,37 +6,46 @@
 
 ## install Icecast2
 
-    We Use 2.4.3 For Linux/Unix, View Site for more infos:
-        
-        http://icecast.org/download/
+    ```
+	wget http://downloads.xiph.org/releases/icecast/icecast-2.4.4.tar.gz
+	tar -xvf icecast-2.4.4.tar.gz
+	./configure
+	make install
+	sudo make install
+    ```
 
-    visit:
+    如果有遇到套件問題, 試試看
 
-	    http://packages.ubuntu.com/xenial/amd64/icecast2/download
-
-    then install it with naive software center
+    ```
+	sudo apt-get install libxslt-dev libvorbis-dev
+    ```
 
 ## install IceS
 
-    Dependicies
+    Dependicies:
         
         sudo apt-get install libshout-dev
 
     In this case, we use IceS0 (deprecated)
 
-        wget http://downloads.us.xiph.org/releases/ices/ices-0.4.tar.gz
-        tar -xvf ices-0.4.tar.gz
-        cd ices-0.4
-        sudo ./configure
-        sudo make install
+	```
+    wget http://downloads.us.xiph.org/releases/ices/ices-0.4.tar.gz
+    tar -xvf ices-0.4.tar.gz
+    cd ices-0.4
+    sudo ./configure
+    make install && sudo make install
 
-        alias iceS=$CURRENT_PATH/src/iceS
+    alias iceS=$CURRENT_PATH/src/iceS
+    ```
 
 
 ## Configuring Icecast
-    
+
+	```
     wget https://raw.githubusercontent.com/yanagiragi/Project-Rajio/master/Icecast2/icecast.xml
+    mkdir /etc/icecast2 # 如果資料夾不存在
     sudo cp icecast.xml /etc/icecast2/icecast.xml
+    ```
 
 ## Running Icecast
 
@@ -46,11 +55,13 @@
 
 ## Configure IceS
 
+	```
     sudo mkdir /etc/ices
     cd /etc/ices
     touch Playlist.txt
     wget https://raw.githubusercontent.com/yanagiragi/Project-Rajio/master/Icecast2/ices.conf
     wget https://raw.githubusercontent.com/yanagiragi/Project-Rajio/master/Icecast2/ices_go
+    ```
 
 ## Add Songs Path to Playlist.txt
 
@@ -67,15 +78,13 @@
 
     ./ices_go
 
-
-
 ## Listening
 
     Visit localhost:8000 for Icecast2 Administration control
 
     Visit localhost:8000/ices for Listening
 
-<hr >
+---
 
 ## Addition Settings
 
