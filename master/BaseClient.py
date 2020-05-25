@@ -7,7 +7,7 @@ def fcs(filename):
 	return hashlib.md5(open(filename, 'rb').read()).hexdigest()
 
 def recvAndWriteFile(clientSocket, modifiedSentence,filename,buffers):
-	clientSocket.send(modifiedSentence)
+	clientSocket.send(bytes(modifiedSentence, 'utf-8'))
 	modifiedSentence = clientSocket.recv(buffers)
 	if modifiedSentence == 'File exists.' :
 		buffers = buffers + 1
@@ -42,7 +42,7 @@ def recvSnapshot(clientSocket,buffers):
 		modifiedSentence = clientSocket.recv(buffers) 
 		tmpStr += modifiedSentence
 	else :
-		print 'err in fetching snapshot'
+		print ('err in fetching snapshot')
 		exit()
 
 	while(len(modifiedSentence) == buffers):
@@ -54,7 +54,7 @@ def server(serverName,serverPort,buffers,sentence,cert):
 	
 	clientSocket = socket(AF_INET, SOCK_STREAM)
 	clientSocket.connect((serverName,serverPort))
-	clientSocket.send(cert)
+	clientSocket.send(bytes(cert, 'utf-8'))
 
 	if sentence == "update_snapshot" :
 		Container = recvSnapshot(clientSocket,buffers)

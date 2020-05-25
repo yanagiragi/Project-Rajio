@@ -1,7 +1,8 @@
 var net = require('net');
 const spawn = require('child_process').spawn;
-var io = require('socket.io-client')('http://localhost:3000');
+var io = require('socket.io-client')('http://localhost:3004');
 var fs = require('fs');
+const path = require('path')
 
 var _this = this;
 
@@ -26,12 +27,14 @@ module.exports.ListenSync = function(){
 			if(data.toString().substring(0,9) == "Serveinfo"){
 				console.log('serve info arrives');
 				serve = data.toString().substring(12,data.toString().indexOf("}")+1);
+				console.log(data.toString())
 				var tmp = data.toString().substring(data.toString().indexOf("}")+2,data.toString().length);
 				tmpStr += tmp;
 				io.emit('serveInfo',[serve,id]);
 			}
-			else if(data.toString().length > 27 && data.toString().substring(data.toString().length - 27, data.toString().length) == "Done with sending snapshot."){
+			else if(data.indexOf("Done with sending snapshot.") == data.toString().length - "Done with sending snapshot.".length){
 				tmpStr += data.toString().substring(0,data.toString().length - 27);
+				console.log(tmpStr)
 				io.emit('snap',{ data: tmpStr , id : id });
 				tmpStr = "";
 			} 
@@ -49,8 +52,37 @@ module.exports.ListenSync = function(){
 	console.log('listen on '+ host + ':' + port);
 };
 
-module.exports.Rappend = function(list,songname,path,OK,io){
-	var stream = fs.createReadStream(list);
+// append song to playlist.txt
+// abort is song already exists in playlist.txt
+module.exports.Rappend = function(list,songname,songpath,OK,io){
+
+	try {
+		const playlistData = fs.readFileSync(playlist).toString().split('\n')
+
+		if (-1 != playlistData.indexOf(songpath)) {
+			console.log('song already on list!');
+			io.emit('Rback', `${songname} : Already in Queue`);
+			return 
+		}
+		else {
+			playlistData.push(songpath)
+			playlistData.push('')
+		}
+
+		try {
+			console.log(playlistData.join('\n'))
+			fs.writeFileSync(playlist, playlistData.join('\n'));
+			io.emit('Rback', `${songname} : All Green`);
+		}
+		catch (err) {
+			io.emit('Rback', `${songname} : IO Error`);
+		}		
+	}
+	catch(err) {
+		io.emit('Rback', `${songname} : IO Error`);
+	}
+
+	/*var stream = fs.createReadStream(list);
 	var found = false;
 	var flag = 0;
 	stream.on('data',function(d){
@@ -87,9 +119,11 @@ module.exports.Rappend = function(list,songname,path,OK,io){
 			io.emit('Rback',songname + " : " + OK);
 		}
 		console.log('leaving Rappend');
-	}
+	}*/
 };
-module.exports.Rsong = function(serverpos,songname,songfcs,io){
+module.exports.Rsong = FetchSong
+
+function oldRsongFunc (serverpos,songname,songfcs,io) {
 	
 	var opt = [
 				'../client.py', 
@@ -111,3 +145,19 @@ module.exports.Rsong = function(serverpos,songname,songfcs,io){
 	});
 };
 
+function FetchSong(server, name, fcs, io) {
+
+	// simply copy song for now
+	const remoteFilePath = path.join(__dirname, '..', 'slave', 'Storage', name)
+	const localFilePath =  path.join(__dirname, 'Storage', name)
+	let status = 'All Green'
+
+	try {
+		fs.copyFileSync(remoteFilePath, localFilePath)
+	}
+	catch (err) {
+		status = `Failed, reason: ${err}`
+	}
+	
+	_this.Rappend(playlist, name, localFilePath, status, io)
+}

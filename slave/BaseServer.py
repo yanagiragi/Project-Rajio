@@ -14,10 +14,10 @@ def initsync(connectionSocket,Container,buffers):
 	lens, tmpStr = 0, updateSnapshot(Container)
 	
 	while lens < len(tmpStr):
-		connectionSocket.send(tmpStr[lens:lens+buffers])
+		connectionSocket.send(bytes(tmpStr[lens:lens+buffers], 'utf-8'))
 		#print (tmpStr[lens:lens+buffers])
 		lens += buffers
-	print '\t> Sync Done.'
+	print ('\t> Sync Done.')
 
 def updateSnapshot(Container):
 	MainContainer = {}
@@ -39,7 +39,7 @@ def serve(serverSocket, Container,buffers,Certificate):
 	timeout = 5
 
 	monkey.patch_all()
-	print 'buffer = ',buffers
+	print ('buffer = ',buffers)
 
 	while 1:
 		connectionSocket, addr = serverSocket.accept()
@@ -51,17 +51,17 @@ def serve(serverSocket, Container,buffers,Certificate):
 			sentence = connectionSocket.recv(buffers)
 			#sentence = sentence[len(Certificate):len(sentence)]
 		else:
-			print 'Rejected'
+			print ('Rejected')
 			connectionSocket.close()
 
-		print 'request = ',sentence
+		print ('request = ',sentence)
 
 		if sentence == 'quit_server' :
-			print "\t> Server shutdown by cilent (%s,%s)" % (connectionSocket.getpeername())
+			print ("\t> Server shutdown by cilent (%s,%s)" % (connectionSocket.getpeername()))
 			connectionSocket.close()
 			exit()
 		elif sentence == 'update_snapshot':
-			print '\t> Request: updating SnapShot'
+			print ('\t> Request: updating SnapShot')
 			lens, tmpStr = 0, updateSnapshot(Container)
 			if len(tmpStr) == buffers :
 				buffers = buffers + 1
@@ -74,31 +74,31 @@ def serve(serverSocket, Container,buffers,Certificate):
 				#print lens
 				#print (tmpStr[lens:lens+buffers])
 				lens += buffers
-			print '\t> Done.'
+			print ('\t> Done.')
 		else:
 			if (sentence in Container) and Container[sentence] != None :
-				print '\t> Response : Yes'
-				print '\t> Sending File : ',sentence
+				print ('\t> Response : Yes')
+				print ('\t> Sending File : ',sentence)
 				g = Greenlet(sendData,connectionSocket, Container[sentence][0],buffers)
 				g.start()
 				g.join()
 			else :
-				print '\t> Response : No'
+				print ('\t> Response : No')
 				connectionSocket.send('File doesn\'t exists.')
-				print '\t> Response Denied.'
-				print '\t> End.'
-		print 'idle.'
+				print ('\t> Response Denied.')
+				print ('\t> End.')
+		print ('idle.')
 
 def sendData(connectionSocket, sentence, buffers):
 
-	print '> Request Appears by [%s,%s] => %s' % (
-		connectionSocket.getpeername()[0], connectionSocket.getpeername()[1],sentence)
+	print ('> Request Appears by [%s,%s] => %s' % (
+		connectionSocket.getpeername()[0], connectionSocket.getpeername()[1],sentence))
 
 	#gevent.sleep(10)
 
 	try: 
 		if int(stat(sentence).st_size) % buffers == 0:
-			print 'buffer++'
+			print ('buffer++')
 			buffers = buffers + 1
 			connectionSocket.send('File exists.')
 		else:
@@ -110,27 +110,27 @@ def sendData(connectionSocket, sentence, buffers):
 		while (l) :
 			try:
 				connectionSocket.send(l)
-			except error, e:
+			except Exception as e:
 				if isinstance(e.args, tuple):
-					print 'errno is %d' % e[0]
+					print ('errno is %d' % e[0])
 					if e[0] == errno.EPIPE:
-						print 'Detected remote disconnect'
+						print ('Detected remote disconnect')
 					else:
 						pass
 				else:
-					print 'socket error ', e
+					print ('socket error ', e)
 					connectionSocket.close()
 				break
 			
 			l = f.read(buffers)
 		f.close()
-	except error, e:
+	except Exception as e:
 		if isinstance(e.args, tuple):
-			print 'errno is %d' % e[0]
+			print ('errno is %d' % e[0])
 			if e[0] == errno.EPIPE:
-				print 'Detected remote disconnect'
+				print ('Detected remote disconnect')
 			else:
 				pass
 		else:
-			print 'socket error ', e
+			print ('socket error ', e)
 			connectionSocket.close()

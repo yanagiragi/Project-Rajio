@@ -171,9 +171,9 @@ function onServe(){
 		socket.on('RLsong',function(name){
 			console.log("get list of " + name);
 			
-			if(name == "") return;
+			if(name == "" || NameContainer.length == 0) return;
 
-			var res = sr.findBestMatch(name,NameContainer);
+			var res = sr.findBestMatch(name, NameContainer);
 			res = res.ratings;
 			res = res.sort(function(a,b){
 				return parseFloat(b.rating) - parseFloat(a.rating);
@@ -189,7 +189,7 @@ function onServe(){
 		});
 	});
 
-	http.listen(3000, function(req,res){
+	http.listen(3004, function(req,res){
 		console.log('listening on *:3000');
 		request.ListenSync();
 	});

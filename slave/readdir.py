@@ -10,8 +10,8 @@ import eyed3
 import songInfo     # self defined class
 
 import sys      # sys.setdefaultencoding() does not exist unitl you import sys!
-reload(sys)     # Reload does the trick!
-sys.setdefaultencoding('utf-8')
+#reload(sys)     # Reload does the trick!
+#sys.setdefaultencoding('utf-8')
 
 """ end of import header """
 
@@ -71,7 +71,7 @@ def get_song_infos(name, path):
 
       return nowinfo
     except ValueError as err:
-      print err.message
+      print (err.message)
       nowinfo = songInfo.info(name ,
                          None,
                          None,
@@ -82,7 +82,7 @@ def get_song_infos(name, path):
       return nowinfo
 
   except (UnicodeDecodeError, ValueError):
-    print "Err on file: "   + path
+    print ("Err on file: "   + path)
     nowinfo = songInfo.info(name ,
                      None,
                      None,
@@ -101,6 +101,6 @@ if __name__ == "__main__":
   for a in Cons:
     #if Cons[a][1] == None:
     #  print a
-    print "Name = " + Cons[a][1].name
-    print "Artist = " + Cons[a][1].artist
-    print ""
+    print ("Name = " + Cons[a][1].name)
+    print ("Artist = " + Cons[a][1].artist)
+    print ("")

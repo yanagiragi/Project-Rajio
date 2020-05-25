@@ -31,15 +31,15 @@ if __name__ == "__main__":
 	# tcp socket
 	syncSocket = socket(AF_INET,SOCK_STREAM)
 	syncSocket.connect((serverHost2,serverPort2))
-	print 'start syncing...'
+	print ('start syncing...')
 	
 	serveinfo = "Serveinfo : { \"host\" : \"" + serverHost + "\" , \"port\" : \"" + str(serverPort) + "\"}";
-	syncSocket.send(serveinfo);
+	syncSocket.send(bytes(serveinfo, 'utf-8'));
 	
-	print 'start collecting snapshot ...'
+	print ('start collecting snapshot ...')
 	BaseServer.initsync(syncSocket,Container,1024);
 	
-	syncSocket.send("Done with sending snapshot.");
+	syncSocket.send(bytes("Done with sending snapshot.", 'utf-8'));
 	# [imp] not doing "syncSocket.close()"
 	# avoid closing socket to told Socket.io it is still alive
 
